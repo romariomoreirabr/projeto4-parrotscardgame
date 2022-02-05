@@ -9,6 +9,9 @@ let nomeCarta1 = null;
 let nomeCarta2 = null;
 let contadorDeAcertos = 0;
 let contadorDeJogadas = 0;
+let tempo = 0;
+let intervalo = null;
+const textoTempo = document.querySelector("aside strong");
 
 function iniciarJogo(){
     numeroDeCartas = 0;
@@ -21,16 +24,20 @@ function iniciarJogo(){
     nomeCarta2 = null;
     contadorDeAcertos = 0;
     contadorDeJogadas = 0;
+    tempo = 0;
+    intervalo = null;
 
     perguntarQuantidadeCartas();
     numeroDePares = numeroDeCartas / 2; 
     inserirCartasAleatorias();
+    intervalo = setInterval(iniciarContagemDeTempo, 1000);
 }
 
 
 // Funções
 function perguntarQuantidadeCartas() {
     numeroDeCartas = parseInt(prompt("Quantas cartas você deseja? (números pares de 4 a 14): "));
+    iniciarContagemDeTempo();
     if(!verificarSeNumeroPar(numeroDeCartas)){
         perguntarQuantidadeCartas();
     }
@@ -106,13 +113,15 @@ function selecionarCarta(divCarta, nomeCarta) {
 
 function conferirPar(divCard1, nomeCard1, divCard2, nomeCard2) {
     if(nomeCard1 === nomeCard2){
-        console.log("Parabésn você encontrou um par!");
+        console.log("Parabéns você encontrou um par!");
         contadorDeAcertos++;
         divCard1.removeAttribute("onclick");
         divCard2.removeAttribute("onclick");
         resetarCartasSelecionadas();
         if (contadorDeAcertos == (numeroDeCartas/2)){
             console.log("Jogo Finalizado!");
+            clearInterval(intervalo);
+            console.log("Tempo: " + tempo);
             setTimeout(perguntarIniciarNovoJogo, 1000);
         }
     } else{
@@ -140,11 +149,16 @@ function desvirarCarta (carta) {
     verso.classList.remove("rotacaoV");
 }
 function perguntarIniciarNovoJogo(){
-    alert("Você ganhou em " + contadorDeJogadas + " jogadas!");
+    alert("Você ganhou em " + contadorDeJogadas + " jogadas e em " + tempo + " segundos !");
     let resposta = prompt("Quer jogar novamente? (s ou n)");
         if (resposta === 's'){
         iniciarJogo();
     }
+}
+
+function iniciarContagemDeTempo(){
+    tempo++;
+    textoTempo.innerHTML = tempo;
 }
 
 

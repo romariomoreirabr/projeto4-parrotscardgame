@@ -16,12 +16,23 @@ header h1 {
     margin-bottom: 47px;
 }
 
+aside {
+  position: relative;
+  width: 100%;
+  height: 40px;
+}
+aside strong {
+  position: absolute;
+  color: red;
+  right: 30px;
+  font-size: 40px;
+}
+
 main .carta {
     width: 117px;
     height: 146px;
     position: relative;
     margin-bottom: 34px;
-
 }
 .carta img {
     width: 100px;
