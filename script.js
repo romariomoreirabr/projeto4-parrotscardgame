@@ -50,11 +50,11 @@ function verificarSeNumeroPar (numero){
 function inserirCartas (idImg) {
     main = document.querySelector("main");
     main.innerHTML += `
-    <div class="carta" onclick="selecionarCarta(this,'${imagensVerso[idImg]}')">
-            <div class="face">
+    <div class="carta" data-identifier="card" onclick="selecionarCarta(this,'${imagensVerso[idImg]}')">
+            <div class="face" data-identifier="back-face">
                 <img src="img/parrot.svg" alt="parrot">
             </div>
-            <div class="back-face face">
+            <div class="back-face face" data-identifier="front-face">
                 <img src="img/${imagensVerso[idImg]}.gif" alt="${imagensVerso[idImg]}">
             </div>
         </div>
