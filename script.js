@@ -9,7 +9,7 @@ let nomeCarta1 = null;
 let nomeCarta2 = null;
 let contadorDeAcertos = 0;
 let contadorDeJogadas = 0;
-let tempo = 0;
+let tempo = -1;
 let intervalo = null;
 const textoTempo = document.querySelector("aside strong");
 
@@ -24,7 +24,7 @@ function iniciarJogo(){
     nomeCarta2 = null;
     contadorDeAcertos = 0;
     contadorDeJogadas = 0;
-    tempo = 0;
+    tempo = -1;
     intervalo = null;
 
     perguntarQuantidadeCartas();
@@ -37,7 +37,6 @@ function iniciarJogo(){
 // Funções
 function perguntarQuantidadeCartas() {
     numeroDeCartas = parseInt(prompt("Quantas cartas você deseja? (números pares de 4 a 14): "));
-    iniciarContagemDeTempo();
     if(!verificarSeNumeroPar(numeroDeCartas)){
         perguntarQuantidadeCartas();
     }
@@ -75,6 +74,7 @@ function inserirCartasAleatorias () {
     for(let i = 0; i < arrayDePosicoesDuplicadoRandom.length; i++) {
         inserirCartas(arrayDePosicoesDuplicadoRandom[i]);
     }
+    iniciarContagemDeTempo();
 }
 
 function sortearCartas() {
@@ -122,6 +122,7 @@ function conferirPar(divCard1, nomeCard1, divCard2, nomeCard2) {
             console.log("Jogo Finalizado!");
             clearInterval(intervalo);
             console.log("Tempo: " + tempo);
+            setTimeout(mostrarMensagemFimDeJogo, 1000);
             setTimeout(perguntarIniciarNovoJogo, 1000);
         }
     } else{
@@ -130,6 +131,9 @@ function conferirPar(divCard1, nomeCard1, divCard2, nomeCard2) {
         setTimeout(desvirarCarta,1000,divCard2);
         resetarCartasSelecionadas();
     }
+}
+function mostrarMensagemFimDeJogo (){
+    alert("Você ganhou em " + contadorDeJogadas + " jogadas e em " + tempo + " segundos !");
 }
 function resetarCartasSelecionadas() {
     cartaSelecionada1 = nomeCarta1 = null;
@@ -149,10 +153,15 @@ function desvirarCarta (carta) {
     verso.classList.remove("rotacaoV");
 }
 function perguntarIniciarNovoJogo(){
-    alert("Você ganhou em " + contadorDeJogadas + " jogadas e em " + tempo + " segundos !");
-    let resposta = prompt("Quer jogar novamente? (s ou n)");
-        if (resposta === 's'){
+    // alert("Você ganhou em " + contadorDeJogadas + " jogadas e em " + tempo + " segundos !");
+    let resposta = prompt("Quer jogar novamente? (s ou n)").toUpperCase();
+    console.log(resposta);
+    if (resposta === 'S'|| resposta === "SIM"){
         iniciarJogo();
+    } else if(resposta === 'N'|| resposta === "NÃO"){  
+        console.log("Fim de jogo! Atualize a página para jogar novamente.");
+    } else {
+        perguntarIniciarNovoJogo();
     }
 }
 
